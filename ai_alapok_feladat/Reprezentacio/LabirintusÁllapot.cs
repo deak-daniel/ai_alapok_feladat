@@ -102,16 +102,16 @@ namespace ai_alapok_feladat
             {
                 case 0:
                     if (aktualisNegyzet.Bal == 1) return false;
-                    else return PreMozog(OperatorOperationDict[Operatorok.Balra]());
+                    else return PreMozog(Operatorok.Balra);
                 case 1:
                     if (aktualisNegyzet.Felso == 1) return false;
-                    else return PreMozog(OperatorOperationDict[Operatorok.Fel]());
+                    else return PreMozog(Operatorok.Fel);
                 case 2:
                     if (aktualisNegyzet.Jobb == 1) return false;
-                    else return PreMozog(OperatorOperationDict[Operatorok.Jobbra]());
+                    else return PreMozog(Operatorok.Jobbra);
                 case 3:
                     if (aktualisNegyzet.Also == 1) return false;
-                    else return PreMozog(OperatorOperationDict[Operatorok.Le]());
+                    else return PreMozog(Operatorok.Le);
                 default:
                     return false;
             }
@@ -177,15 +177,21 @@ namespace ai_alapok_feladat
         /// <returns>Az aktualis negyzettol lefele levo negyzetet adja vissza.</returns>
         private Negyzet Le() => Program.labirintus[aktualisNegyzet.y, aktualisNegyzet.x - 1];
         /// <summary>
-        /// Metodus ami megnezi, hogy az adott negyzet, az egy valos allapot-e.
+        /// Metodus ami megnezi, hogy az aktualis negyzetbol, az adott iranybol elmozdulas valos allapotot eredmenyez-e.
         /// </summary>
-        /// <param name="negyzet">A negyzet amit nezunk.</param>
+        /// <param name="op">Az operator amivel tesztelunk</param>
         /// <returns>Az itelet.</returns>
-        private bool PreMozog(Negyzet negyzet)
+        private bool PreMozog(Operatorok op)
         {
-            if (!(negyzet.x > 0 || negyzet.x <= N)) return false;
-            else if (!(negyzet.y > 0 || negyzet.y <= N)) return false;
-            return true;
+            try
+            {
+                OperatorOperationDict[op]();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
         #endregion
 
