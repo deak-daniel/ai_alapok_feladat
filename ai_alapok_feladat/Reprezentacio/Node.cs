@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ai_alapok_feladat
 {
-    internal class Node
+    internal class Node : IComparable<Node>
     {
         #region Fields
         /// <summary>
@@ -58,7 +58,7 @@ namespace ai_alapok_feladat
         /// Kiterjesztjuk ebbol a csucsbol, az osszes olyan csucsot, amit kapunk, ha az összes operátort alkalmazzuk erre a csúcsra.
         /// Aztan felvesszuk ezeket a csucsokat ennek a csucsnak a gyerekeikent.
         /// </summary>
-        /// <returns>Csucsok listaja, amit az operatorok alkalmazasabol kaptunk..</returns>
+        /// <returns>Csucsok listaja, amit az operatorok alkalmazasabol kaptunk.</returns>
         public List<Node> Kiterjesztes()
         {
             List<Node> újCsúcsok = new List<Node>();
@@ -118,7 +118,7 @@ namespace ai_alapok_feladat
         /// <summary>
         /// Jelzi, hogy ez a csucs celcsucs-e.
         /// </summary>
-        public bool CelCsucs { get => allapot.CélÁllapotE(); }
+        public bool IsCelCsucs { get => allapot.CélÁllapotE(); }
         #endregion
 
         #region Overrides
@@ -134,6 +134,17 @@ namespace ai_alapok_feladat
         public override string ToString()
         {
             return $"{allapot.Koordinatak.Item1}:{allapot.Koordinatak.Item2}";
+        }
+        #endregion
+
+        #region IComparable interface implementation
+        public int CompareTo(Node? node)
+        {
+            if (node == null) throw new ArgumentNullException("Argument cannot be null.");
+            if (node.BecsultUtKoltseg == this.BecsultUtKoltseg) return 0;
+            else if (node.BecsultUtKoltseg > this.BecsultUtKoltseg) return -1;
+            else if (node.BecsultUtKoltseg < this.BecsultUtKoltseg) return 1;
+            throw new Exception("Nem sikerult az osszehasonlitas.");
         }
         #endregion
     }

@@ -29,18 +29,25 @@ namespace ai_alapok_feladat
         public override Node Kereses(Node kezdoNode) // Elindulunk a kiindulo csucsbol (1,1) koordinata
         {
             Node cel = new Node();
-            nyiltCsucsok.Enqueue(kezdoNode, kezdoNode.BecsultUtKoltseg); // Betesszuk a sorba, az adott becsult utkoltseggel.
-            while (nyiltCsucsok.Count != 0)
+            nyiltCsucsok.Enqueue(kezdoNode); // Betesszuk a sorba, az adott becsult utkoltseggel.
+            while (nyiltCsucsok.Count != 0) // Addig megyunk, amig van nyitott csucs.
             {
-                Node node = nyiltCsucsok.Dequeue(); // Kivesszuk a legkisebb utkoltsegu csucsot, majd kiterjesztjuk.
-                List<Node> newNodes = node.Kiterjesztes();
+                Node node = nyiltCsucsok.Dequeue(); // Kivesszuk a legkisebb utkoltsegu csucsot, 
+                List<Node> newNodes = node.Kiterjesztes(); // majd kiterjesztjuk.
                 foreach (Node item in newNodes)
                 {
+                    bool canEnqueue = false;
+                    if (nyiltCsucsok.Contains(item)) // Korfigyeles, ha benne van a nyitott csucsokban,
+                    {
+                        Node node1 = nyiltCsucsok.Find(item); // Akkor megkeressuk
+                        if (node1.CompareTo(item) == -1) canEnqueue = true; // Es ha jobb a vizsgalt csucsnak az f erteke, akkor betesszuk ujra a nyiltcsucsokba.
+                    }
                     if (!zartCsucsok.Contains(item)) // Megnezzuk, hogy a kiterjesztett csucsok valamelyike benne van-e mar a zart csucsokban, 
                     {                                // ha igen, akkor mar nem kell vele foglalkozni, ha nincs akkor nyitott csucskent felvesszuk a sorba
-                        nyiltCsucsok.Enqueue(item, item.BecsultUtKoltseg);
+                        canEnqueue = true;
                     }
-                    if (item.CelCsucs) // Megnezzuk, hogy az adott csucs celcsucs-e.
+                    if (canEnqueue) nyiltCsucsok.Enqueue(item);
+                    if (item.IsCelCsucs) // Megnezzuk, hogy az adott csucs celcsucs-e.
                     {
                         cel = item;
                     }
@@ -48,25 +55,6 @@ namespace ai_alapok_feladat
                 zartCsucsok.Add(node); // A legutobb kiterjesztett csucsot betesszuk a zart csucsokba.
             }
             return cel;
-        }
-        #endregion
-
-        #region Static methods
-        /// <summary>
-        /// Utvonal visszafejtese, az adott csucsbol.
-        /// </summary>
-        /// <param name="cel">Az adott csucs, amibol visszafejtjuk az utvonalat a start csucsig.</param>
-        /// <returns>A koordinatak sorban a starttol az adott csucsig.</returns>
-        public static string UtKiir(Node cel)
-        {
-            StringBuilder sb = new StringBuilder();
-            while (cel.Szulo != null)
-            {
-                sb.Append(cel.ToString() + ";");
-                cel = cel.Szulo;
-            }
-            string[] reverse = sb.ToString().Split(";", StringSplitOptions.RemoveEmptyEntries).Reverse().ToArray();
-            return string.Join(" ", reverse);
         }
         #endregion
     }
