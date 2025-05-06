@@ -67,7 +67,6 @@ namespace ai_alapok_feladat
                 Node újCsúcs = new Node(this);
                 if (újCsúcs.allapot.SzuperOperátor(i))
                 {
-                    újCsúcs.allapot.Mozog((Operatorok)i);
                     újCsúcsok.Add(újCsúcs);
                 }
             }
@@ -127,13 +126,13 @@ namespace ai_alapok_feladat
             bool res = false;
             if (obj is Node)
             {
-                res = (obj as Node).allapot.Koordinatak == this.allapot.Koordinatak;
+                res = this.allapot.Equals((obj as Node).allapot);
             }
             return res;
         }
         public override string ToString()
         {
-            return $"{allapot.Koordinatak.Item1}:{allapot.Koordinatak.Item2}";
+            return allapot.ToString();
         }
         #endregion
 

@@ -102,16 +102,48 @@ namespace ai_alapok_feladat
             {
                 case 0:
                     if (aktualisNegyzet.Bal == 1) return false;
-                    else return PreMozog(Operatorok.Balra);
+                    else 
+                    {
+                        if (PreMozog(Operatorok.Balra))
+                        {
+                            aktualisNegyzet = OperatorOperationDict[Operatorok.Balra]();
+                            return true;
+                        }
+                        return false;
+                    }
                 case 1:
                     if (aktualisNegyzet.Felso == 1) return false;
-                    else return PreMozog(Operatorok.Fel);
+                    else
+                    {
+                        if (PreMozog(Operatorok.Fel))
+                        {
+                            aktualisNegyzet = OperatorOperationDict[Operatorok.Fel]();
+                            return true;
+                        }
+                        return false;
+                    }
                 case 2:
                     if (aktualisNegyzet.Jobb == 1) return false;
-                    else return PreMozog(Operatorok.Jobbra);
+                    else
+                    {
+                        if (PreMozog(Operatorok.Jobbra))
+                        {
+                            aktualisNegyzet = OperatorOperationDict[Operatorok.Jobbra]();
+                            return true;
+                        }
+                        return false;
+                    }
                 case 3:
                     if (aktualisNegyzet.Also == 1) return false;
-                    else return PreMozog(Operatorok.Le);
+                    else
+                    {
+                        if (PreMozog(Operatorok.Le))
+                        {
+                            aktualisNegyzet = OperatorOperationDict[Operatorok.Le]();
+                            return true;
+                        }
+                        return false;
+                    }
                 default:
                     return false;
             }
@@ -128,32 +160,28 @@ namespace ai_alapok_feladat
         }
         #endregion // AbsztraktAllapot implementation
 
-        #region Public methods
-        /// <summary>
-        /// Aktualis negyzetbol a megadott iranyba elmozgas.
-        /// </summary>
-        /// <param name="lepes"></param>
-        public void Mozog(Operatorok lepes)
+        #region Overrides
+        public override bool Equals(object a)
         {
-            switch (lepes)
+            if (a == null) return false;
+            if (a is LabirintusÁllapot)
             {
-                case Operatorok.Balra:
-                    aktualisNegyzet = OperatorOperationDict[Operatorok.Balra]();
-                    break;
-                case Operatorok.Fel:
-                        aktualisNegyzet = OperatorOperationDict[Operatorok.Fel]();
-                    break;
-                case Operatorok.Jobbra:
-                    aktualisNegyzet = OperatorOperationDict[Operatorok.Jobbra]();
-                    break;
-                case Operatorok.Le:
-                    aktualisNegyzet = OperatorOperationDict[Operatorok.Le]();
-                    break;
-                default:
-                    break;
+                if (aktualisNegyzet.x == (a as LabirintusÁllapot).aktualisNegyzet.x && aktualisNegyzet.y == (a as LabirintusÁllapot).aktualisNegyzet.y)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
+            return false;
         }
-        #endregion // Public methods
+        public override string ToString()
+        {
+            return aktualisNegyzet.ToString();
+        }
+        #endregion
 
         #region Private methods
         /// <summary>
@@ -180,7 +208,7 @@ namespace ai_alapok_feladat
         /// Metodus ami megnezi, hogy az aktualis negyzetbol, az adott iranybol elmozdulas valos allapotot eredmenyez-e.
         /// </summary>
         /// <param name="op">Az operator amivel tesztelunk</param>
-        /// <returns>Az itelet.</returns>
+        /// <returns>Igaz, ha a lepes utan is valodi allapot lesz, kulonben hamis.</returns>
         private bool PreMozog(Operatorok op)
         {
             try
