@@ -46,16 +46,17 @@ namespace ai_alapok_feladat
                     {                                // ha igen, akkor mar nem kell vele foglalkozni, ha nincs akkor nyitott csucskent felvesszuk a sorba
                         canEnqueue = true;
                     }
-                    if (canEnqueue) nyiltCsucsok.Enqueue(item);
                     if (item.IsCelCsucs) // Megnezzuk, hogy az adott csucs celcsucs-e.
                     {
                         cel = item;
+                        return cel; // Ha megvan a celcsucs, akkor mar keszen is vagyunk a keresessel.
                     }
+                    if (canEnqueue) nyiltCsucsok.Enqueue(item);
                 }
                 zartCsucsok.Add(node); // A legutobb kiterjesztett csucsot betesszuk a zart csucsokba.
             }
             return cel;
         }
-        #endregion
+        #endregion // Public methods
     }
 }

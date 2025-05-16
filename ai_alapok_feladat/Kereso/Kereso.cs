@@ -52,6 +52,7 @@ namespace ai_alapok_feladat
                 sb.Append(cel.ToString() + ";");
                 cel = cel.Szulo;
             }
+            sb.Append("1:1");
             string[] reverse = sb.ToString().Split(";", StringSplitOptions.RemoveEmptyEntries).Reverse().ToArray();
             return string.Join(" ", reverse);
         }
