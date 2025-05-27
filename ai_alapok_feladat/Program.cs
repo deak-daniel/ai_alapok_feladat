@@ -2,8 +2,8 @@
 {
     internal class Program
     {
-                    public static int KezdoallapotErtek = 1;
-   /* y tengely*/   public static int CelallapotErtek = 10;
+                    public readonly static int KezdoallapotErtek = 1;
+   /* y tengely*/   public readonly static int CelallapotErtek = 10;
    /* | */          public readonly static Negyzet[,] labirintus = new Negyzet[,]
    /* v */          {
    /*  x -> | 1                                     | 2                   | 3                   | 4                   | 5                   | 6                   | 7                   | 8                     |*/  

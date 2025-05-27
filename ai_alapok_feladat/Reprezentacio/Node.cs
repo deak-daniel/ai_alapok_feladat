@@ -78,15 +78,15 @@ namespace ai_alapok_feladat
         #region Public properties
         public Node Szulo { get => szulo; }
         /// <summary>
-        /// Manhattan tavolsag a celtol, ez a heurisztika.
+        /// Euklideszi tavolsag a celtol, ez a heurisztika.
         /// </summary>
         public double h
         {
             get
             {
-                double helper = Math.Abs(allapot.Koordinatak.Item1 - 8);
-                double helper2 = Math.Abs(allapot.Koordinatak.Item2 - 8);
-                return helper + helper2;
+                double helper = Math.Pow(allapot.Koordinatak.Item1 - 8, 2);
+                double helper2 = Math.Pow(allapot.Koordinatak.Item2 - 8, 2);
+                return Math.Sqrt(helper + helper2);
             }
         }
         /// <summary>

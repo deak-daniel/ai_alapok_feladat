@@ -9,7 +9,7 @@ namespace ai_alapok_feladat
     /// <summary>
     /// Representation of a single tile in the labyrinth.
     /// </summary>
-    internal class Negyzet
+    internal class Negyzet : ICloneable
     {
         #region Public properties
         public double Bal { get; private set; }
@@ -50,6 +50,21 @@ namespace ai_alapok_feladat
         {
             return $"{x}:{y}";
         }
+
+        public object Clone()
+        {
+            return new Negyzet() 
+            {
+                Bal = this.Bal,
+                Felso = this.Felso,
+                Jobb = this.Jobb,
+                Also = this.Also,
+                Ertek = this.Ertek,
+                x = this.x,
+                y = this.y
+            };
+        }
+
         #endregion
     }
 }

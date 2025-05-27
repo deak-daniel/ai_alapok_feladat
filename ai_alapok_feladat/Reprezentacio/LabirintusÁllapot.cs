@@ -211,15 +211,22 @@ namespace ai_alapok_feladat
         /// <returns>Igaz, ha a lepes utan is valodi allapot lesz, kulonben hamis.</returns>
         private bool PreMozog(Operatorok op)
         {
+            bool res = false;
+            Negyzet tmp = (Negyzet)aktualisNegyzet.Clone();
             try
             {
-                OperatorOperationDict[op]();
-                return true;
+                aktualisNegyzet = OperatorOperationDict[op]();
+                res = ÁllapotE();
             }
-            catch (Exception)
+            catch (IndexOutOfRangeException)
             {
-                return false;
+                res = false;
             }
+            finally
+            {
+                aktualisNegyzet = tmp;
+            }
+            return res;
         }
         #endregion
 
