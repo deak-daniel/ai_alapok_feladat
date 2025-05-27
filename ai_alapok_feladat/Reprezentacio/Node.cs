@@ -55,8 +55,8 @@ namespace ai_alapok_feladat
 
         #region Public methods
         /// <summary>
-        /// Kiterjesztjuk ebbol a csucsbol, az osszes olyan csucsot, amit kapunk, ha az összes operátort alkalmazzuk erre a csúcsra.
-        /// Aztan felvesszuk ezeket a csucsokat ennek a csucsnak a gyerekeikent.
+        /// Az osszes lehetseges uj allapotot kiterjesztjuk, ugy, hogy az osszes operatort alkalmazzuk erre az allapotra (erre a csucsra),
+        /// az igy kapott csucsokat eltaroljuk, es visszaadjuk.
         /// </summary>
         /// <returns>Csucsok listaja, amit az operatorok alkalmazasabol kaptunk.</returns>
         public List<Node> Kiterjesztes()
